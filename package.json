@@ -1,0 +1,209 @@
+{
+  "name": "vscode-wonkey",
+  "displayName": "Wonkey",
+  "description": "Wonkey language support for Visual Studio Code",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.52.0"
+  },
+  "publisher": "wonkey-coders",
+  "homepage": "https://wonkey-coders.github.io/wonkey-mkdocs/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wonkey-coders/vscode-wonkey"
+  },
+  "keywords": [
+    "Wonkey",
+    "wonkey",
+    "wx",
+    "wonkey language"
+  ],
+  "categories": [
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "workspaceContains:**/*.wx",
+    "workspaceContains:**/*.wxproject",
+    "workspaceContains:**/*.monkey2",
+    "onLanguage:wonkey",
+    "onCommand:wake.helloWorld"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "wake.helloWorld",
+        "title": "Wonkey: Hello World"
+      },
+      {
+        "command": "wake.version",
+        "title": "Wonkey: Show version"
+      },
+      {
+        "command": "wake.check",
+        "title": "Wonkey: Check current file"
+      },
+      {
+        "command": "wake.build",
+        "title": "Wonkey: Build current file"
+      },
+      {
+        "command": "wake.rebuild",
+        "title": "Wonkey: Clean and rebuild current file"
+      },
+      {
+        "command": "wake.run",
+        "title": "Wonkey: Run current file"
+      },
+      {
+        "command": "wake.rerun",
+        "title": "Wonkey: Clean and run current file"
+      },
+      {
+        "command": "wake.geninfo",
+        "title": "Wonkey: Semant current file"
+      }
+    ],
+    "languages": [
+      {
+        "id": "wonkey",
+        "aliases": [
+          "Wonkey",
+          "Monkey2"
+        ],
+        "extensions": [
+          ".wx", 
+          ".wxproject", 
+          ".monkey2"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "wonkey",
+        "scopeName": "source.wonkey",
+        "path": "./syntaxes/wonkey.tmLanguage"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "wake.check",
+          "when": "editorLangId == wonkey"
+        },
+        {
+          "command": "wake.build",
+          "when": "editorLangId == wonkey"
+        },
+        {
+          "command": "wake.run",
+          "when": "editorLangId == wonkey"
+        }
+      ]
+    },
+    "breakpoints": [
+      {
+        "language": "wonkey"
+      }
+    ],
+    "configuration":{
+      "title": "Wonkey",
+      "properties": {
+        "wonkey.rootPath": {
+          "scope": "resource",
+          "type": "string",
+          "default": "",
+          "description": "Path to Wonkey root folder."
+        },
+        "wonkey.build.target": {
+          "scope": "resource",
+          "type":"string",
+          "default": "desktop",
+          "enum": ["desktop", "emscripten", "android", "ios", "windows", "linux", "macos", "raspbian"],
+          "enumDescriptions": [
+            "Select automatic desktop target",
+            "Web target",
+            "Mobile target",
+            "Mobile target",
+            "Windows target",
+            "Linux target",
+            "macOS target",
+            "Raspbian target (not yet implemented)"
+          ],
+          "description": "Specifie build target."
+        },
+        "wonkey.build.config": {
+          "scope": "resource",
+          "type":"string",
+          "default": "release",
+          "enum": ["debug", "release"],
+          "description": "Specifie build configuration."
+        },
+        "wonkey.build.apptype": {
+          "scope": "resource",
+          "type":"string",
+          "default": "gui",
+          "enum": ["gui", "console"],
+          "description": "Specifie output application type."
+        },
+        "wonkey.build.verbose": {
+          "scope": "resource",
+          "type":"integer",
+          "default": "0",
+          "description": "Enable output verbose level.",
+          "enum": ["0", "1", "2", "3"],
+          "enumDescriptions": [
+            "No verbose",
+            "Level 1",
+            "Level 2",
+            "Level 3"
+          ]
+        },
+        "wonkey.wls.customPath": {
+          "scope": "resource",
+          "type":"string",
+          "default":"",
+          "description": "Custom path to the WLS (Wonkey Language Server) executable. Restart is required to take effect."
+        },
+        "wonkey.wls.enable": {
+          "scope": "resource",
+          "type":"boolean",
+          "default": false,
+          "description": "Enable WLS (Wonkey Language Server). (not yet implemented)"
+        },
+        "wonkey.wls.enableFeatures": {
+          "scope": "resource",
+          "type":"string",
+          "description": "Enables specific language server features. Multiple values must be separated with a comma (,)."
+        },
+        "wonkey.wls.disableFeatures": {
+          "scope": "resource",
+          "type":"string",
+          "description": "Disables specific language server features. Multiple values must be separated with a comma (,)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.3",
+    "@types/mocha": "^8.0.4",
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.52.0",
+    "@typescript-eslint/eslint-plugin": "^4.9.0",
+    "@typescript-eslint/parser": "^4.9.0",
+    "eslint": "^7.15.0",
+    "glob": "^7.1.6",
+    "mocha": "^8.1.3",
+    "typescript": "^4.1.2",
+    "vscode-test": "^1.4.1"
+  }
+}
